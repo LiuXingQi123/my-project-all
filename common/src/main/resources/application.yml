@@ -1,44 +1,64 @@
+# 服务器端口配置
 server:
   port: 8010
+
+# Spring 配置
 spring:
+  # 应用名称
   application:
     name: common-service
 
   # 数据库配置
   datasource:
+    # 驱动类名
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接 URL
     url: jdbc:mysql://localhost:3306/db_ysxt?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    # 数据库用户名
     username: root
+    # 数据库密码
     password: 123456
 
   #  Redis配置
   data:
     redis:
+      # Redis 主机
       host:  localhost
+      # Redis 端口
       port:  6379
+      # Redis 数据库编号
       database: 0
+      # Redis 密码
       password: 123456
+      # Lettuce 连接池配置
       lettuce:
         pool:
+          # 最大活动连接数
           max-active: 8
+          # 最大等待连接数（-1 表示无限等待）
           max-wait: -1
+          # 最大空闲连接数
           max-idle: 8
+          # 最小空闲连接数
           min-idle: 0
 
-# 配置mybatis的xml文件路径
+# MyBatis 配置
 mybatis:
+  # MyBatis 映射文件位置
   mapper-locations: classpath*:mappers/**/*.xml
 
-
+# 配置中心相关配置
 some:
   property: "测试配置中心，打印出来了就代表连接上了"
 
+# 服务名称和 URL 配置
 common_name: common-service
 common_url: 'localhost:8010'
 
+# 服务名称和 URL 配置
 demo1_name: demo1-service
 demo1_url: 'localhost:8011'
 
+# 服务名称和 URL 配置
 demo2_name: demo2-service
 demo2_url: 'localhost:8012'
-
