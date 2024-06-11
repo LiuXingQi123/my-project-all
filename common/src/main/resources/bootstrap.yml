@@ -1,0 +1,26 @@
+# nacos配置
+server:
+  port: 8010
+spring:
+  application:
+    name: common-service
+
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+        server-addr: 127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868
+#        username: nacos
+#        password: nacos
+      config:
+        enabled: false
+        server-addr: 127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868
+        file-extension: yaml
+        namespace: public
+        group: DEFAULT_GROUP
+        name: common-dev.yaml
+        refresh-enabled: true # 是否开启配置的自动刷新
+#        username: nacos
+#        password: nacos

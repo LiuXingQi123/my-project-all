@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo3.dao.TbQuestionMapper">
+
+    <select id="queryTitlePageCount" parameterType="com.example.common.vo.TbQuestionVo" resultType="int">
+        select count(*) from
+            (
+                SELECT
+                    a.id                                             AS id
+                     , a.title
+                     , a.create_user                                 AS createUser
+                     , IF(a.answer = 0, '未回答', CONCAT(a.answer, '个回答')) AS answer
+                     , c.html
+                     , GROUP_CONCAT(DISTINCT b.label)                   AS labels
+                     , COUNT(DISTINCT d.id)                             AS visitedcount
+                     , COUNT(DISTINCT e.id)                             AS commentcount
+                FROM
+                    tb_question a -- 问题表
+                        LEFT JOIN tb_tag b -- 标签表
+                                  ON FIND_IN_SET(b.id, a.tags)
+                        LEFT JOIN tb_editor_data AS c -- 富文本表
+                                  ON c.id = a.question
+                        LEFT JOIN tb_user_visited_question AS d -- 用户浏览问题记录表
+                                  ON d.question_id = a.id
+                        LEFT JOIN tb_comment AS e -- 评论表
+                                  ON e.question_id = a.id
+                WHERE
+                    1 = 1
+        <if test="title!=null and title!=''">
+            and a.title like CONCAT('%', #{title}, '%')
+        </if>
+                GROUP BY
+                    a.id
+            ) AS w
+    </select>
+
+    <select id="queryTitlePage" parameterType="com.example.common.vo.TbQuestionVo" resultType="com.example.common.dto.TbQuestionDto">
+        SELECT
+            a.id                                             AS questionId
+             , a.title
+             , a.create_user                                 AS  createUser
+             , IF(a.answer = 0, '未回答', CONCAT(a.answer, '个回答')) AS answer
+             , c.html
+             , GROUP_CONCAT(DISTINCT b.label)                   AS labels
+             , COUNT(DISTINCT d.id)                             AS visitedCount
+             , COUNT(DISTINCT e.id)                             AS commentCount
+        FROM
+            tb_question a -- 问题表
+                LEFT JOIN tb_tag b -- 标签表
+                          ON FIND_IN_SET(b.id, a.tags)
+                LEFT JOIN tb_editor_data AS c -- 富文本表
+                          ON c.id = a.question
+                LEFT JOIN tb_user_visited_question AS d -- 用户浏览问题记录表
+                          ON d.question_id = a.id
+                LEFT JOIN tb_comment AS e -- 评论表
+                          ON e.question_id = a.id
+        WHERE
+            1 = 1
+        <if test="title!=null and title!=''">
+            and a.title like CONCAT('%', #{title}, '%')
+        </if>
+        GROUP BY
+            a.id
+        LIMIT #{beginNo} , #{endNo}
+    </select>
+
+    <select id="queryCommentList" parameterType="com.example.common.vo.TbQuestionVo" resultType="com.example.common.dto.TbCommentDto">
+        SELECT
+            a.id                         AS commentId
+             , a.reply_id                   AS replyId
+             , a.question_id                AS questionId
+             , a.create_user                AS createUser
+             , a.create_time                AS createTime
+             , b.html
+             , b.raw
+
+             , c.username
+             , COUNT(DISTINCT c.comment_id) AS likedCommentCount
+             , COUNT(DISTINCT d.id) AS repliedCount
+
+
+        FROM
+            tb_comment AS a -- 评论表
+                LEFT JOIN tb_editor_data AS b -- 富文本表
+                          ON b.id = a.comment
+                LEFT JOIN tb_user_liked_comment AS c -- 用户点赞评论表
+                          ON c.comment_id = a.id
+                LEFT JOIN tb_comment AS d -- 回复【评论表】
+                          ON d.question_id = a.question_id AND d.reply_id = a.id
+        WHERE
+            1 = 1
+            AND a.question_id = #{questionId}
+            AND a.reply_id = #{replyId}
+        GROUP BY
+            a.id
+    </select>
+
+</mapper>

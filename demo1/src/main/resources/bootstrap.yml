@@ -1,0 +1,39 @@
+# Nacos配置
+server:
+  port: 8011  # Nacos服务器的端口号
+spring:
+  application:
+    name: demo1-service  # Spring应用名称
+
+  profiles:
+    active: dev  # 激活的profile，这里设置为dev，表示在开发环境中使用
+  cloud:
+    nacos:
+      discovery:
+        enabled: false  # 是否开启服务发现功能
+        server-addr: 127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868  # Nacos服务器的地址
+      #        username: nacos  # Nacos服务器的用户名
+      #        password: nacos  # Nacos服务器的密码
+      config:
+        enabled: false  # 是否开启配置中心功能
+        server-addr: 127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868  # Nacos配置服务器的地址
+        file-extension: yaml  # 配置文件的扩展名
+        namespace: public  # 命名空间
+        group: DEFAULT_GROUP  # 分组
+        name: demo1-dev.yaml  # 配置文件名称
+        refresh-enabled: true  # 是否开启配置的自动刷新
+#        username: nacos
+#        password: nacos
+
+# 配置中心相关配置
+some:
+  property: "测试配置中心，打印出来了就代表连接上了"  # 配置中心相关配置
+
+common_name: common-service  # 配置中心服务名称
+common_url: 'localhost:8010'  # 配置中心服务URL
+
+demo1_name: demo1-service  # 服务名称
+demo1_url: 'localhost:8011'  # 服务URL
+
+demo2_name: demo2-service  # 服务名称
+demo2_url: 'localhost:8012'  # 服务URL

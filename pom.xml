@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.0</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.example</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- 设为 pom 表明这是一个聚合项目的父 POM，不生成具体的 JAR 或 WAR 文件 -->
+    <packaging>pom</packaging>
+
+    <!-- 子模块列表，这些模块将继承父 POM 的配置 -->
+    <modules>
+        <module>common</module>
+        <module>demo1</module>
+        <module>demo2</module>
+        <module>demo3</module>
+    </modules>
+
+    <properties>
+        <!-- 定义项目使用的Java版本，用于确保编译和运行环境一致 -->
+        <java.version>17</java.version>
+        <!-- 【2023.0.1.0】 -->
+        <spring.cloud.alibaba.version>2023.0.1.0</spring.cloud.alibaba.version>
+        <!-- 【2023.0.1】-->
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <lombok.version>1.18.32</lombok.version>
+    </properties>
+
+    <dependencies>
+
+        <!--
+            【spring-boot】
+            spring-boot的基本依赖，其中包括
+            Spring Core：Spring 框架的核心库，提供依赖注入（DI）和面向切面编程（AOP）的支持。
+            Spring Context：应用上下文模块，提供基于注释和 XML 的配置支持
+            Spring AOP：面向切面编程的支持库。
+            Logging：默认包含 SLF4J 和 Logback 用于日志记录。
+         -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--
+            【spring-boot-test】
+            Spring Boot测试启动器: 包含进行单元和集成测试所需的所有依赖。
+            包括JUnit, Mockito, Spring Test等，支持广泛的测试功能。
+            设置test scope以确保这些依赖只在测试编译和执行阶段被使用。
+         -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            【spring-boot-web】
+            Spring Boot Web Starter: 包括所有构建基于Spring MVC的web应用所需的依赖。
+            自动配置内嵌的Tomcat容器，适用于开发web应用和微服务。
+            包含Spring MVC, Tomcat, JSON转换等默认配置。
+         -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+            【spring-boot-devtools】
+            Spring Boot开发工具: 提供热部署功能，支持自动重启应用和加载变更。
+            提高开发效率，适用于开发阶段使用。
+            设为optional和runtime scope以避免在生产环境中被包含。
+         -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            【spring-data-redis】
+            Spring Boot Data Redis Starter: 提供 Redis 数据访问的自动配置和功能。
+            包括 Redis 客户端库和 Spring Data Redis 集成，支持如 RedisTemplate 和相关序列化器。
+            主要用于应用中的缓存实现和高速数据访问操作，适用于高并发场景和消息队列应用。
+         -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--
+            【boot-mybatis】
+             MyBatis Spring Boot Starter: 提供集成MyBatis框架的必需依赖。
+             自动配置数据源和SQL会话工厂，简化MyBatis与Spring Boot的集成。
+             适合需要通过MyBatis进行数据库操作的应用。
+         -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <!--
+            【mysql-jdbc】
+             MySQL JDBC 驱动依赖，连接mysql用
+         -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.2.0</version>
+        </dependency>
+
+
+        <!--
+            【lombok】
+             Lombok库
+         -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!--
+            【pagehelper】
+            提供MyBatis的分页功能支持，允许简单地进行分页查询。
+         -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+
+        <!--
+            【pagehelper】
+            自动配置PageHelper分页插件，简化了其在Spring Boot应用中的设置和使用。
+         -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+
+        <!--
+            【pagehelper】
+             PageHelper Spring Boot Starter，用于简化PageHelper配置
+         -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <!--
+            【cloud-nacos-discovery】
+             Spring Cloud Alibaba Nacos 注册中心
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--
+            【cloud-nacos-config】
+             Spring Cloud Alibaba Nacos 配置中心
+         -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!--
+            【cloud-openfeign】
+             此依赖包为 Spring Cloud OpenFeign 提供支持，是使用 OpenFeign 必需的。
+            - groupId: 组织ID，标识发布包的组织。
+            - artifactId: 工件ID，指定了具体的项目或模块。
+            - 此起步依赖包含了所有必要的依赖项，以便快速启动和运行基于 Feign 的服务客户端。
+            - OpenFeign 是一个声明式的Web服务客户端，它使得编写Web服务客户端变得更简单。
+            - 通过这个依赖，Spring Boot 应用能够自动配置并使用 Feign 来进行服务间的调用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!--
+            【cloud-loadbalancer】
+            依赖声明：Spring Cloud LoadBalancer Starter
+            说明：该依赖项用于在 Spring Cloud 应用中启用负载均衡功能。
+            当使用 OpenFeign、RestTemplate 或 WebClient 进行服务间通信时，
+            该依赖可以提供客户端负载均衡功能，从而在多个服务实例之间分配请求。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+
+        <!--
+            【cloud-bootstrap】
+            作用: spring-cloud-starter-bootstrap 依赖用于引导 Spring Cloud 应用程序的启动过程，特别是加载 bootstrap.yml 文件中的配置
+            无法加载 bootstrap.yml 配置: 如果没有 spring-cloud-starter-bootstrap 依赖，Spring Cloud 应用程序在启动时将无法加载 bootstrap.yml 文件中的配置
+            优先级问题: bootstrap.yml 的优先级高于 application.yml，用于存放一些启动时必须优先加载的配置项
+         -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!--
+            【easyexcel】
+            -添加 easyexcel 依赖，同时排除 commons-compress 传递依赖
+            排除易受攻击的传递依赖：在 easyexcel 依赖中排除 commons-compress
+         -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>3.3.4</version> <!-- 使用最新的 easyexcel 版本 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--
+            【easyexcel】
+            -显式添加安全版本的 commons-compress 依赖
+            强制覆盖易受攻击的依赖：手动添加一个安全版本的 commons-compress
+        -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.26.2</version> <!-- 使用没有漏洞的最新版本 -->
+        </dependency>
+
+        <!--
+            【easyexcel】
+            -示例：如果 easyexcel 依赖 poi，并且 poi 依赖 commons-compress，则在此处也排除
+            验证依赖树：确保所有传递依赖中都没有使用到有漏洞的版本
+         -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>${lombok.version}</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Spring Boot Maven插件：用于简化Spring Boot应用的打包和运行过程。
+                 提供了运行、打包Spring Boot应用到可执行jar包等功能。
+                 这使得开发、部署和运行Spring Boot应用更为方便和快捷。 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Maven编译器插件：用于控制Java源代码的编译过程。
+                 可以设置源代码和目标Java版本，确保代码与运行环境的兼容性。
+                 该插件支持编译过程中的优化和配置，如调整编译版本。 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source> <!-- 设置Java源代码版本 -->
+                    <target>${java.version}</target> <!-- 设置Java目标字节码版本 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <!-- Spring Snapshots 仓库配置:
+             用于访问Spring框架的快照版本，这些版本包括最新开发中的功能和修复。
+             快照版本通常用于开发测试，提供了对最新开发进展的访问。
+             通常不推荐在生产环境中使用快照版本，因为它们可能包含未解决的错误并且功能可能会改变。
+
+             此配置允许从 Spring 的快照仓库下载依赖，但禁用了对发布版本的访问，
+             因为此仓库主要用于提供还未正式发布的版本。 -->
+
+        <repository>
+            <id>spring-snapshots</id> <!-- 仓库的唯一标识符 -->
+            <name>Spring Snapshots</name> <!-- 仓库的描述性名称 -->
+            <url>https://repo.spring.io/snapshot</url> <!-- 仓库的URL地址，指向Spring的快照版本存储位置 -->
+            <releases>
+                <enabled>false</enabled> <!-- 在此仓库中禁用对正式发布版本的访问，仅使用快照版本 -->
+            </releases>
+        </repository>
+    </repositories>
+
+
+    <pluginRepositories>
+        <!-- 插件仓库配置:
+             用于访问 Spring 框架开发中的快照版本插件。这些插件包括最新开发的 Maven 插件，
+             可以用于支持最新的框架功能或提前测试未发布的插件版本。
+             快照版本插件通常用于开发环境，帮助开发者在正式发布前测试和适应新功能。
+
+             此配置允许下载来自 Spring 的快照仓库的插件，但明确禁用了正式发布版本的插件，
+             因为该仓库主要用于提供预发布版本。这有助于保持开发环境与最新开发进展同步，
+             但不推荐在生产环境中使用这些插件，以避免潜在的稳定性和兼容性问题。 -->
+
+        <pluginRepository>
+            <id>spring-snapshots</id> <!-- 唯一标识符，用于在 Maven 配置中引用此仓库 -->
+            <name>Spring Snapshots</name> <!-- 仓库的描述性名称，更易理解其用途 -->
+            <url>https://repo.spring.io/snapshot</url> <!-- 仓库URL地址，指向Spring的快照版本存储位置 -->
+            <releases>
+                <enabled>false</enabled>  <!-- 禁用此仓库中的正式发布版本插件，确保仅访问快照版本 -->
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}
+                </version> <!-- 使用与 Spring Boot 3.2.7-SNAPSHOT 兼容的 Spring Cloud 版本 -->
+                <type>pom</type> <!-- 指定依赖类型为 POM，这意味着此依赖项将作为一组依赖项的父 POM 进行导入 -->
+                <scope>import</scope> <!-- 使用 import 范围，这将允许子项目继承和使用这个依赖管理配置 -->
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version> <!-- 使用与 Spring Boot 3.2.7-SNAPSHOT 兼容的 Spring Cloud 版本 -->
+                <type>pom</type> <!-- 指定依赖类型为 POM，这意味着此依赖项将作为一组依赖项的父 POM 进行导入 -->
+                <scope>import</scope> <!-- 使用 import 范围，这将允许子项目继承和使用这个依赖管理配置 -->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
